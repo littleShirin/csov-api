@@ -1,0 +1,35 @@
+version: "3.8"
+services:
+  crown:
+    container_name: crown
+    image: crownsterlingllc/csov-node:latest
+    ports:
+      - "9944:9944"
+      - "9933:9933"
+      - "30333:30333"
+    volumes:
+      - ./volume:/crown-sterling
+    command: [
+      "--name", "CrownDocker01",
+      "--node-key=aa19d6623e9a1d5eafc8e41551add97d603dcfc0e03252a6d3314c0f89fc5fbc",
+      "--base-path", "/crown-sterling/CrownDocker01",
+      "--bootnodes", "/dns/blockchain.crownsterling.io/tcp/30333/p2p/12D3KooWPsxbb4v6FRPuBAEAkksYWMrsi19nUHUyt8sYrEi1iFr4",
+      "--offchain-worker=Always",
+      "--validator",
+      "--port","30333",
+      "--ws-port","9944",
+      "--rpc-port", "9933",
+      "--unsafe-ws-external",
+      "--unsafe-rpc-external", 
+      "--rpc-methods", "Unsafe",
+      "--ws-external",
+      "--rpc-external",
+      "--rpc-cors", "all",
+    ]
+
+  api:
+    image: crownsterlingllc/csov-api:latest
+    ports:
+      - "8080:8080"
+    environment:
+      SAS_SUBSTRATE_WS_URL: ws://crown:9944

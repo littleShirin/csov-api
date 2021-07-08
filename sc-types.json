@@ -1,0 +1,27 @@
+{
+  "Address": "MultiAddress",
+  "LookupSource": "MultiAddress",
+  "AccountInfo": {
+    "nonce": "Index",
+    "consumers": "RefCount",
+    "providers": "RefCount",
+    "data": "AccountData"
+  },
+  "Balance": "u128",
+  "BalanceOf": "Balance",
+  "AuthorityOf": "AccountId",
+  "PaymentId": "[u8; 16]",
+  "Payment": {
+    "id": "PaymentId",
+    "account_id": "AccountId",
+    "success_url": "Vec<u8>",
+    "failure_url": "Vec<u8>",
+    "paid": "bool",
+    "pay_to": "AccountId"
+  },
+  "PeerId": "(Vec<u8>)",
+  "Amendment": {
+    "statement": "Vec<u8>",
+    "owners": "Vec<AccountId>"
+  }
+}
