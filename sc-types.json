@@ -23,5 +23,13 @@
   "Amendment": {
     "statement": "Vec<u8>",
     "owners": "Vec<AccountId>"
-  }
+  },
+  "BlockNumber": "u32",
+  "VestingSchedule": {
+    "start": "BlockNumber",
+    "period": "BlockNumber",
+    "period_count": "BlockNumber",
+    "per_period": "Compact<Balance>"
+  },
+  "VestingScheduleOf": "VestingSchedule"
 }

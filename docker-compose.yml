@@ -11,7 +11,7 @@ services:
       - ./volume:/crown-sterling
     command: [
       "--name", "CrownDocker01",
-      "--node-key=aa19d6623e9a1d5eafc8e41551add97d603dcfc0e03252a6d3314c0f89fc5fbc",
+      "--node-key=<your_node_key>",
       "--base-path", "/crown-sterling/CrownDocker01",
       "--bootnodes", "/dns/blockchain.crownsterling.io/tcp/30333/p2p/12D3KooWPsxbb4v6FRPuBAEAkksYWMrsi19nUHUyt8sYrEi1iFr4",
       "--offchain-worker=Always",
