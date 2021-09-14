@@ -16,4 +16,5 @@ __exportStar(require("./SignService"), exports);
 __exportStar(require("./Signature"), exports);
 __exportStar(require("./ParseService"), exports);
 __exportStar(require("./SubmitService"), exports);
+__exportStar(require("./TransactionFeeService"), exports);
 //# sourceMappingURL=index.js.map

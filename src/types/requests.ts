@@ -11,6 +11,12 @@ export interface MetaData {
 	metadata: {};
 }
 
+export interface TransactionFeeRequest {
+	network_identifier: StatusMetaData,
+	"blockHash":  BlockHash, 
+	"txHash": string
+}
+
 export interface StatusMetaData {
 		  blockchain: string,
 		  network: string,

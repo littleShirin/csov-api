@@ -13,6 +13,7 @@ export const mandalaControllers: ControllerConfig = {
 		KeyController: true,
 		UnsignedController: true,
 		NetworkStatus: true, 
+		TransactionFeeController: true,
 	},
 	options: {
 		finalizes: true,

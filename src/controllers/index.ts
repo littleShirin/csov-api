@@ -3,7 +3,7 @@ import { BlockTransactionController } from './blocks';
 import { NetworkStatus} from './network';
 
 import {
-	DeriveController, UnsignedController, SignController, SubmitController} from './construction';
+	DeriveController, UnsignedController, SignController, SubmitController, TransactionFeeController} from './construction';
 /**
  * Object containing every controller class definition.
  */
@@ -16,4 +16,5 @@ export const controllers = {
 	UnsignedController,
 	SubmitController,
 	NetworkStatus,
+	TransactionFeeController
 };
