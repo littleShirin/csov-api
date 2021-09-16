@@ -6,9 +6,9 @@ const AbstractController_1 = require("../AbstractController");
 class SubmitController extends AbstractController_1.default {
     constructor(csovApi, api) {
         super(csovApi, api, '/construction/submit', new services_1.SubmitService(csovApi, api));
-        this.getCombine = async ({ body: { signed_transaction } }, res) => {
+        this.getCombine = async ({ body: { signed_transaction, blockHash } }, res) => {
             console.log();
-            SubmitController.sanitizedSend(res, await this.service.fetchSubmit(signed_transaction));
+            SubmitController.sanitizedSend(res, await this.service.fetchSubmit(signed_transaction, blockHash));
         };
         this.initRoutes();
     }

@@ -165,7 +165,8 @@ export interface HashRequest {
 
 export interface SubmitRequest {
 	network_identifier: StatusMetaData,
-	"signed_transaction": string
+	"signed_transaction": string,
+	"blockHash": string
 }
 
 

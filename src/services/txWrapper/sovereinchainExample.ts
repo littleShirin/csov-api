@@ -28,7 +28,7 @@ const destBob = '5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty';
 
 interface signedResponse {
 	signedTx: string, 
-	// signature: string,
+	blockHash: string
 }
 
 
@@ -294,6 +294,12 @@ export async function sign_tx(unsigned: UnsignedTransaction, unsigned_tx : strin
 	});
 	// console.log(` \nTransaction to Submit: ${tx}`);
 
+	const decodedSignedTx = decode(unsigned, {
+		metadataRpc,
+		registry,
+	});
+
+	console.log('decodedSignedTx', decodedSignedTx);
 	// Calculate the tx hash of the signed transaction offline.
 	// const expectedTxHash = construct.txHash(tx);
 	// console.log(`\nExpected Tx Hash: ${expectedTxHash}`);
@@ -304,5 +310,7 @@ export async function sign_tx(unsigned: UnsignedTransaction, unsigned_tx : strin
 	// console.log(`\nExpected Tx Hash: ${expectedTxHash}`);
 	return {
 		signedTx: tx,
+		blockHash: unsigned.blockHash
+
 	}
 }

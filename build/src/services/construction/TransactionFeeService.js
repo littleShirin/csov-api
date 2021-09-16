@@ -25,7 +25,7 @@ class TransactionFeeService extends AbstractService_1.AbstractService {
             return { hash, destSenderValueObj };
         });
         transactionsInfo.shift();
-        console.log('transactionsInfo', transactionsInfo);
+        //console.log('transactionsInfo', transactionsInfo)
         //find the  right extrinsic in block matching to txHash input value 
         const getTxHashMatch = transactionsInfo.filter((tx => (tx.hash == txHash)));
         //index of tx inside of extrinsics 
@@ -33,17 +33,18 @@ class TransactionFeeService extends AbstractService_1.AbstractService {
         console.log('txHashMatchIndex', txHashMatchIndex);
         console.log('extrinsic:', JSON.stringify(currBlock.block.extrinsics[txHashMatchIndex].toHuman(), null, 2));
         //querry fee of extrinsic at matching index 
-        const queryFeeDetails = await this.api.rpc.payment
-            .queryFeeDetails(currBlock.block.extrinsics[txHashMatchIndex]
-            .toHex(), blockHash);
-        console.log('queryFeeDetails:', JSON.stringify(queryFeeDetails.toHuman(), null, 2));
+        // const queryFeeDetails = 
+        // await this.api.rpc.payment
+        // .queryFeeDetails(currBlock.block.extrinsics[txHashMatchIndex]
+        // .toHex(), blockHash);
+        //console.log('queryFeeDetails:', JSON.stringify(queryFeeDetails.toHuman(), null, 2));
         const queryInfo = await this.api.rpc.payment
             .queryInfo(currBlock.block.extrinsics[txHashMatchIndex]
             .toHex(), blockHash);
-        console.log('queryInfo:', JSON.stringify(queryInfo.toHuman(), null, 2));
+        //console.log('queryInfo:', JSON.stringify(queryInfo.toHuman(), null, 2));
         return {
-            partialFee: queryInfo.partialFee.toHuman(),
-            weight: queryInfo.weight.toHuman()
+            partialFee: queryInfo.partialFee.toNumber(),
+            weight: queryInfo.weight.toNumber()
         };
     }
 }

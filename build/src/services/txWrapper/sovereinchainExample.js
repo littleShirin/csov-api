@@ -210,6 +210,11 @@ async function sign_tx(unsigned, unsigned_tx, mnemonic) {
         registry,
     });
     // console.log(` \nTransaction to Submit: ${tx}`);
+    const decodedSignedTx = index_1.decode(unsigned, {
+        metadataRpc,
+        registry,
+    });
+    console.log('decodedSignedTx', decodedSignedTx);
     // Calculate the tx hash of the signed transaction offline.
     // const expectedTxHash = construct.txHash(tx);
     // console.log(`\nExpected Tx Hash: ${expectedTxHash}`);
@@ -218,6 +223,7 @@ async function sign_tx(unsigned, unsigned_tx, mnemonic) {
     // console.log(`\nExpected Tx Hash: ${expectedTxHash}`);
     return {
         signedTx: tx,
+        blockHash: unsigned.blockHash
     };
 }
 exports.sign_tx = sign_tx;

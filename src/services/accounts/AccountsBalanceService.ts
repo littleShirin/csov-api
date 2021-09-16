@@ -7,7 +7,7 @@ import { hexToU8a, isHex } from '@polkadot/util';
 export class AccountsBalanceService extends AbstractService {
 
     async fetchAccountBalance(addresses: string[]): Promise<IAccountBalanceResponse>{
-
+       
 
         const validAddress = []; 
         const invalidAddress = []; 
@@ -32,7 +32,8 @@ export class AccountsBalanceService extends AbstractService {
 
                 for(const address of validAddress){
                     const balance = await (this.api.query.system.account(address))
-                     balanceStore[address] = balance.data.free.toString(); 
+                    console.log('balance', balance);
+                     balanceStore[address] = balance.data.free.toString();  
                 }
             
            

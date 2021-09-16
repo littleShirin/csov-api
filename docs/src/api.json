@@ -1617,10 +1617,14 @@
         "description":"ConstructionCombineResponse is returned by `/construction/combine`. The network payload will be sent directly to the `construction/submit` endpoint.",
         "type":"object",
         "required": [
-          "signed_transaction"
+          "signed_transaction",
+          "blockHash"
          ],
         "properties": {
           "signed_transaction": {
+            "type":"string"
+           },
+           "blockHash": {
             "type":"string"
            }
          }
@@ -1690,10 +1694,14 @@
         "description":"The transaction submission request includes a signed transaction.",
         "type":"object",
         "required": [
-          "signed_transaction"
+          "signed_transaction",
+          "blockchain"
          ],
         "properties": {
           "signed_transaction": {
+            "type":"string"
+           },
+           "blockHash": {
             "type":"string"
            }
          }
@@ -1702,11 +1710,16 @@
         "description":"TransactionIdentifierResponse contains the transaction_identifier of a transaction that was submitted to either `/construction/hash` or `/construction/submit`.",
         "type":"object",
         "required": [
-          "transaction_identifier"
+          "blockHash",
+          "txHash"
+          
          ],
         "properties": {
-          "transaction_identifier": {
-            "$ref":"#/components/schemas/TransactionIdentifier"
+          "blockHash": {
+            "type": "string"
+          },
+          "txHash": {
+            "type": "string"
            }
          }
        },

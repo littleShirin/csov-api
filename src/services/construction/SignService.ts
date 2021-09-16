@@ -17,9 +17,11 @@ export class SignService extends AbstractService {
         throw Error("Invalid Mnemonic!");
       }else{
         const signed_transaction = (await sign_tx(unsigned, unsigned_tx, mnemonic)).signedTx;
+        const blockHash = (await sign_tx(unsigned, unsigned_tx, mnemonic)).blockHash;
     
         return{
           signed_transaction,
+          blockHash
         }
       }
   };

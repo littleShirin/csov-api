@@ -18,8 +18,10 @@ class SignService extends AbstractService_1.AbstractService {
         }
         else {
             const signed_transaction = (await sovereinchainExample_1.sign_tx(unsigned, unsigned_tx, mnemonic)).signedTx;
+            const blockHash = (await sovereinchainExample_1.sign_tx(unsigned, unsigned_tx, mnemonic)).blockHash;
             return {
                 signed_transaction,
+                blockHash
             };
         }
     }

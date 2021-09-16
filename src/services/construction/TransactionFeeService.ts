@@ -4,8 +4,8 @@ import { u8aToHex } from '@polkadot/util';
 import { blake2AsU8a } from '@polkadot/util-crypto';
 
 interface resTransactionFee {
-    partialFee: string, 
-    weight: string
+    partialFee: number, 
+    weight: number
 }
 
 
@@ -25,7 +25,6 @@ export class TransactionFeeService extends AbstractService {
 				const destSenderValueObj = {
                     index: index
                 }; 
-                
 				const dest = extrinsic.method.toJSON().args.dest; 
 				const value = extrinsic.method.toJSON().args.value; 
 				const sender = extrinsic.signer.toJSON();
@@ -39,7 +38,7 @@ export class TransactionFeeService extends AbstractService {
 				});
             
                 transactionsInfo.shift();
-                console.log('transactionsInfo', transactionsInfo)
+                //console.log('transactionsInfo', transactionsInfo)
 
                 //find the  right extrinsic in block matching to txHash input value 
                 const getTxHashMatch  = transactionsInfo.filter((tx => (tx.hash == txHash)));
@@ -50,17 +49,17 @@ export class TransactionFeeService extends AbstractService {
                 console.log('extrinsic:', JSON.stringify(currBlock.block.extrinsics[txHashMatchIndex].toHuman(), null, 2));
 
                 //querry fee of extrinsic at matching index 
-                const queryFeeDetails = 
-                await this.api.rpc.payment
-                .queryFeeDetails(currBlock.block.extrinsics[txHashMatchIndex]
-                .toHex(), blockHash);
+                // const queryFeeDetails = 
+                // await this.api.rpc.payment
+                // .queryFeeDetails(currBlock.block.extrinsics[txHashMatchIndex]
+                // .toHex(), blockHash);
                     
-                console.log('queryFeeDetails:', JSON.stringify(queryFeeDetails.toHuman(), null, 2));
+                //console.log('queryFeeDetails:', JSON.stringify(queryFeeDetails.toHuman(), null, 2));
 
                 const queryInfo = await this.api.rpc.payment
                 .queryInfo(currBlock.block.extrinsics[txHashMatchIndex]
                 .toHex(), blockHash);
-                console.log('queryInfo:', JSON.stringify(queryInfo.toHuman(), null, 2));
+                //console.log('queryInfo:', JSON.stringify(queryInfo.toHuman(), null, 2));
 
 
             
@@ -69,8 +68,8 @@ export class TransactionFeeService extends AbstractService {
     
 
             return {    
-                    partialFee: queryInfo.partialFee.toHuman(), 
-                    weight: queryInfo.weight.toHuman()
+                    partialFee: queryInfo.partialFee.toNumber(), 
+                    weight: queryInfo.weight.toNumber()
                   }
         }
 }
