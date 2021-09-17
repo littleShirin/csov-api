@@ -27,13 +27,13 @@ export class SubmitController extends AbstractController<SubmitService> {
 
 
 	private getCombine: IPostRequestHandler<SubmitRequest> = async (
-		{ body:{signed_transaction, blockHash} },
+		{ body:{signed_transaction} },
 		res
 	): Promise<void> => {
 		console.log()
         SubmitController.sanitizedSend(
 			res,
-			await this.service.fetchSubmit(signed_transaction, blockHash)
+			await this.service.fetchSubmit(signed_transaction)
 		);
 	};
 }

@@ -11,10 +11,16 @@ export interface MetaData {
 	metadata: {};
 }
 
-export interface TransactionFeeRequest {
+export interface HistoricFeeRequest {
 	network_identifier: StatusMetaData,
 	"blockHash":  BlockHash, 
 	"txHash": string
+}
+
+export interface EstimateFeeRequest {
+	sender: string, 
+	receiver:string,
+	amount: string
 }
 
 export interface StatusMetaData {
@@ -166,7 +172,7 @@ export interface HashRequest {
 export interface SubmitRequest {
 	network_identifier: StatusMetaData,
 	"signed_transaction": string,
-	"blockHash": string
+	
 }
 
 

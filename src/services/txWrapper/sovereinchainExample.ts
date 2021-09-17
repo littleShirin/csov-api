@@ -10,8 +10,7 @@ import { cryptoWaitReady } from '@polkadot/util-crypto';
 import { TypeRegistry } from '@substrate/txwrapper-core'
 import { construct, decode, deriveAddress, getRegistry, methods, UnsignedTransaction} from './index';
 import { rpcToLocalNode, signWith } from './util';
-import { getMetadata } from '../metadata';
-
+//import { getMetadata } from '../metadata';
 //import { BalancesTransferArgs } from "@substrate/txwrapper-substrate/lib/methods/balances"
 
 
@@ -24,12 +23,21 @@ import { getMetadata } from '../metadata';
 const destBob = '5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty'; 
 //const sendAlice = '5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY';
 
-
+interface  unsigned_txProps {
+	block: any,
+	blockHash: any,
+	genesisHash: any,
+	metadataRpc: any,
+	accountNonce: any,
+	specVersion: any,
+	transactionVersion: any,
+	specName: any
+  }
 
 interface signedResponse {
 	signedTx: string, 
-	blockHash: string
 }
+
 
 
 interface unsignedResponse {
@@ -196,22 +204,22 @@ interface resMain {
 }
 
 
-export async function unsigned_tx(value : string, dest: string, sender:string ): Promise<unsignedResponse> {
-	const { block } = await rpcToLocalNode('chain_getBlock');
-	const blockHash = await rpcToLocalNode('chain_getBlockHash');
-	const genesisHash = await rpcToLocalNode('chain_getBlockHash', [0]);
-	const metadataRpc = await getMetadata();;
-	const accountNonce = await rpcToLocalNode('system_accountNextIndex',[sender]);
-	const { specVersion, transactionVersion, specName } = await rpcToLocalNode(
-		'state_getRuntimeVersion'
-	);
+export async function unsigned_tx(amount : string, dest: string, sender:string, unsigned_txProps: unsigned_txProps): Promise<unsignedResponse> {
+	// const { block } = await rpcToLocalNode('chain_getBlock');
+	// const blockHash = await rpcToLocalNode('chain_getBlockHash');
+	// const genesisHash = await rpcToLocalNode('chain_getBlockHash', [0]);
+	// const metadataRpc = await getMetadata();;
+	// const accountNonce = await rpcToLocalNode('system_accountNextIndex',[sender]);
+	// const { specVersion, transactionVersion, specName } = await rpcToLocalNode(
+	// 	'state_getRuntimeVersion'
+	// );
 
 	// Create SovereinChain type registry.
 	const registry = getRegistry({
 		chainName: 'SovereignChain',
-		specName,
-		specVersion,
-		metadataRpc,
+		specName: unsigned_txProps.specName,
+		specVersion: unsigned_txProps.specVersion,
+		metadataRpc: unsigned_txProps.metadataRpc,
 	});
 
 	
@@ -220,26 +228,26 @@ export async function unsigned_tx(value : string, dest: string, sender:string ):
 	// if desired.
 	const unsigned: UnsignedTransaction  = methods.balances.transfer(
 		{
-			value: value,
+			value: amount,
 			dest: dest, 
 		},
 		{
 			// address: deriveAddress(alice.publicKey, 42), 
 			address: sender,
-			blockHash,
+			blockHash: unsigned_txProps.blockHash,
 			blockNumber: registry
-				.createType('BlockNumber', block.header.number)
+				.createType('BlockNumber', unsigned_txProps.block.block.header.number)
 				.toNumber(),
 			eraPeriod: 64,
-			genesisHash,
-			metadataRpc,
-			nonce: accountNonce, 
-			specVersion,
+			genesisHash: unsigned_txProps.genesisHash,
+			metadataRpc: unsigned_txProps.metadataRpc,
+			nonce: unsigned_txProps.accountNonce, 
+			specVersion: unsigned_txProps.specVersion,
 			tip: 0,
-			transactionVersion,
+			transactionVersion: unsigned_txProps.transactionVersion,
 		},
 		{
-			metadataRpc,
+			metadataRpc: unsigned_txProps.metadataRpc,
 			registry,
 		}
 	);
@@ -255,7 +263,13 @@ export async function unsigned_tx(value : string, dest: string, sender:string ):
 }
 
 
-export async function sign_tx(unsigned: UnsignedTransaction, unsigned_tx : string, mnemonic: string ): Promise<signedResponse> {
+export async function sign_tx(
+	unsigned: UnsignedTransaction, 
+	unsigned_tx : string, 
+	mnemonic: string, 
+	metadataRpc: any, 
+	specName: any,
+	specVersion: any): Promise<signedResponse> {
 
 	// Wait for the promise to resolve async WASM
 	await cryptoWaitReady();
@@ -264,11 +278,12 @@ export async function sign_tx(unsigned: UnsignedTransaction, unsigned_tx : strin
 	
 	const alice = keyring.addFromMnemonic(mnemonic,{ name: 'Alice' }, 'sr25519');
 	
-	const metadataRpc = await rpcToLocalNode('state_getMetadata');
+	// const metadataRpc = await rpcToLocalNode('state_getMetadata');
 	// const accountNonce = await rpcToLocalNode('system_accountNextIndex',[sender]);
-	const { specVersion, specName } = await rpcToLocalNode(
-		'state_getRuntimeVersion'
-	);
+
+	// const { specVersion, specName } = await rpcToLocalNode(
+	// 	'state_getRuntimeVersion'
+	// );
 	
 	// Create SovereinChain type registry.
 	const registry = getRegistry({
@@ -294,7 +309,12 @@ export async function sign_tx(unsigned: UnsignedTransaction, unsigned_tx : strin
 	});
 	// console.log(` \nTransaction to Submit: ${tx}`);
 
-	const decodedSignedTx = decode(unsigned, {
+	// const decodedSignedTx = decode(unsigned, {
+	// 	metadataRpc,
+	// 	registry,
+	// });
+
+	const decodedSignedTx = decode(tx, {
 		metadataRpc,
 		registry,
 	});
@@ -310,7 +330,5 @@ export async function sign_tx(unsigned: UnsignedTransaction, unsigned_tx : strin
 	// console.log(`\nExpected Tx Hash: ${expectedTxHash}`);
 	return {
 		signedTx: tx,
-		blockHash: unsigned.blockHash
-
 	}
 }

@@ -15,7 +15,8 @@ exports.defaultControllers = {
         KeyController: true,
         UnsignedController: true,
         NetworkStatus: true,
-        TransactionFeeController: true,
+        HistoricFeeController: true,
+        EstimateFeeController: true,
     },
     options: {
         finalizes: true,

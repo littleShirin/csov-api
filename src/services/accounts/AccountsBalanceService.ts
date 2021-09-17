@@ -30,6 +30,7 @@ export class AccountsBalanceService extends AbstractService {
  
             const balanceStore: Record<string, string> = {}; 
 
+            //add blockHash and blockNumber? 
                 for(const address of validAddress){
                     const balance = await (this.api.query.system.account(address))
                     console.log('balance', balance);

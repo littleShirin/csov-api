@@ -11,7 +11,8 @@ exports.kulupuControllers = {
         KeyController: true,
         UnsignedController: true,
         NetworkStatus: true,
-        TransactionFeeController: true,
+        HistoricFeeController: true,
+        EstimateFeeController: true,
     },
     options: {
         finalizes: false,

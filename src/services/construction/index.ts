@@ -4,4 +4,5 @@ export * from './SignService';
 export * from './Signature';
 export * from './ParseService';
 export * from './SubmitService';
-export * from './TransactionFeeService'
+export * from './HistoricFeeService';
+export * from './EstimateFeeService'

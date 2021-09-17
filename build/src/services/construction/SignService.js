@@ -17,11 +17,13 @@ class SignService extends AbstractService_1.AbstractService {
             throw Error("Invalid Mnemonic!");
         }
         else {
-            const signed_transaction = (await sovereinchainExample_1.sign_tx(unsigned, unsigned_tx, mnemonic)).signedTx;
-            const blockHash = (await sovereinchainExample_1.sign_tx(unsigned, unsigned_tx, mnemonic)).blockHash;
+            const metadataRpc = unsigned.metadataRpc;
+            const specName = await (await this.api.rpc.state.getRuntimeVersion()).specName;
+            const specVersion = unsigned.specVersion;
+            //const blockHash = unsigned.blockHash
+            const signed_transaction = (await sovereinchainExample_1.sign_tx(unsigned, unsigned_tx, mnemonic, metadataRpc, specName, specVersion)).signedTx;
             return {
                 signed_transaction,
-                blockHash
             };
         }
     }

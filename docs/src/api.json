@@ -287,11 +287,11 @@
          }
        }
      },
-     "/construction/transactionFee": {
+     "/construction/estimateFee": {
       "post": {
-        "summary":"Receive the Transaction Fee",
+        "summary":"Receive the estimate transaction fee.",
         "description":"",
-        "operationId":"constructiontransactionFee",
+        "operationId":"constructiontransactionEstimateFee",
         "tags": [
           "Construction"
          ],
@@ -300,7 +300,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref":"#/components/schemas/ConstructionTransactionFeeRequest"
+                "$ref":"#/components/schemas/ConstructionEstimateFeeRequest"
                }
              }
            }
@@ -311,7 +311,49 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref":"#/components/schemas/ConstructionTransactionFeeResponse"
+                  "$ref":"#/components/schemas/ConstructionEstimateFeeResponse"
+                 }
+               }
+             }
+           },
+          "500": {
+            "description":"unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref":"#/components/schemas/Error"
+                 }
+               }
+             }
+           }
+         }
+       }
+     },
+     "/construction/historicFee": {
+      "post": {
+        "summary":"Receive the historic transaction fee.",
+        "description":"",
+        "operationId":"constructiontransactionHistoricFee",
+        "tags": [
+          "Construction"
+         ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref":"#/components/schemas/ConstructionHistoricFeeRequest"
+               }
+             }
+           }
+         },
+        "responses": {
+          "200": {
+            "description":"Expected response to a valid request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref":"#/components/schemas/ConstructionHistoricFeeResponse"
                  }
                }
              }
@@ -1576,8 +1618,8 @@
            }
          }
        },
-       "ConstructionTransactionFeeResponse": {
-        "description":"ConstructionTransactionFeeResponse is returned by `/construction/transactionFee`.",
+       "ConstructionHistoricFeeResponse": {
+        "description":"ConstructionTransactionFeeResponse is returned by `/construction/historicFee`.",
         "type":"object",
         "required": [
           "partialFee",
@@ -1594,8 +1636,50 @@
            }
          }
        },
-       "ConstructionTransactionFeeRequest": {
-        "description":"ConstructionTransactionFeeRequest is the input to the `/construction/transactionFee` endpoint.",
+       "ConstructionEstimateFeeResponse": {
+        "description":"ConstructionTransactionFeeResponse is returned by `/construction/estimateFee`.",
+        "type":"object",
+        "required": [
+          "partialFee",
+          "weight"
+         ],
+        "properties": {
+          "partialFee": {
+            "type":"string",
+            "example":"125000141"
+           },
+           "weight": {
+            "type":"string",
+            "example": "206909000"
+           }
+         }
+       },
+       "ConstructionEstimateFeeRequest": {
+        "description":"ConstructionHistoricFeeRequest is the input to the `/construction/estimateFee` endpoint.",
+        "type":"object",
+        "required": [
+          "sender",
+          "receiver", 
+          "amount"
+          
+         ],
+        "properties": {
+          "sender": {
+            "type":"string",
+            "example":"14jB2B8HwjhtqBAkZ1t8hwPvnReXKeJvTgPpdJeMP67eEM5n"
+           },
+          "receiver": {
+            "type":"string",
+            "example":"16ULZnCzkGUt7GPHRxVuq4ciECXXY7Ds4QABT6EvMwA5KQZx"
+           },
+           "amount": {
+            "type":"string",
+            "example":"1"
+           }
+         }
+       },
+       "ConstructionHistoricFeeRequest": {
+        "description":"ConstructionHistoricFeeRequest is the input to the `/construction/historicFee` endpoint.",
         "type":"object",
         "required": [
           "blockHash",

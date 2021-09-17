@@ -22,6 +22,7 @@ class AccountsBalanceService extends AbstractService_1.AbstractService {
             (checkAddress) ? validAddress.push(address) : invalidAddress.push(address);
         }
         const balanceStore = {};
+        //add blockHash and blockNumber? 
         for (const address of validAddress) {
             const balance = await (this.api.query.system.account(address));
             console.log('balance', balance);

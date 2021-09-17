@@ -6,7 +6,33 @@ const txWrapper_1 = require("../txWrapper");
 const keyring_1 = require("@polkadot/keyring");
 const util_1 = require("@polkadot/util");
 class UnsignedService extends AbstractService_1.AbstractService {
-    async fetchUnsigned(accountSender, accountReceiver, value) {
+    async fetchUnsigned(accountSender, accountReceiver, amount) {
+        const block = await this.api.rpc.chain.getBlock();
+        const blockHash = await this.api.rpc.chain.getBlockHash();
+        const genesisHash = await this.api.rpc.chain.getBlockHash(0);
+        const metadataRpc = await this.api.rpc.state.getMetadata();
+        const accountNonce = await this.api.rpc.system.accountNextIndex(accountSender);
+        const specVersion = await (await this.api.rpc.state.getRuntimeVersion()).specVersion;
+        const transactionVersion = await (await this.api.rpc.state.getRuntimeVersion()).transactionVersion;
+        const specName = await (await this.api.rpc.state.getRuntimeVersion()).specName;
+        const unsigned_txProps = {
+            block: block,
+            blockHash: blockHash,
+            genesisHash: genesisHash,
+            metadataRpc: metadataRpc,
+            accountNonce: accountNonce,
+            specVersion: specVersion,
+            transactionVersion: transactionVersion,
+            specName: specName
+        };
+        // console.log('block:', block.toJSON());
+        // console.log('blockHash:', blockHash.toJSON());
+        // console.log('genesisHash:', genesisHash.toJSON());
+        // console.log('metadataRpc:', metadataRpc.toJSON());
+        // console.log('accountNonce:', accountNonce.toJSON());
+        // console.log('specVersion:', specVersion.toJSON());
+        // console.log('transactionVersion:', transactionVersion.toJSON());
+        // console.log('specName:', specName.toJSON());
         const isValidAddress = (address) => {
             try {
                 keyring_1.encodeAddress(util_1.isHex(address) ? util_1.hexToU8a(address) : keyring_1.decodeAddress(address));
@@ -24,14 +50,14 @@ class UnsignedService extends AbstractService_1.AbstractService {
         else if (!checkReceiver) {
             throw Error('Invalid Receiver Address!');
         }
-        else if (!value || Number(value) < 0) {
+        else if (!amount || Number(amount) < 0) {
             throw Error("Value can't be negative or empty!");
         }
         else {
-            const unsigned_resonse = await txWrapper_1.unsigned_tx(value, accountReceiver, accountSender);
+            const unsigned_res = await txWrapper_1.unsigned_tx(amount, accountReceiver, accountSender, unsigned_txProps);
             return {
-                unsigned_transaction: unsigned_resonse.unsignedTx,
-                unsigned: unsigned_resonse.unsigned,
+                unsigned_transaction: unsigned_res.unsignedTx,
+                unsigned: unsigned_res.unsigned,
             };
         }
     }

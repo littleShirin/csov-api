@@ -21,7 +21,7 @@ export class UnsignedController extends AbstractController< UnsignedService> {
 	}
 
 	private getPayloads: IPostRequestHandler<PayloadsRequestV2> = async (
-		{ body:{accountSender,accountReceiver,amount} },
+		{ body:{accountSender, accountReceiver, amount} },
 		res
 	): Promise<void> => {
 		//can we validate accountSender and account Receiver 

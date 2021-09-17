@@ -17,6 +17,7 @@ exports.controllers = {
     UnsignedController: construction_1.UnsignedController,
     SubmitController: construction_1.SubmitController,
     NetworkStatus: network_1.NetworkStatus,
-    TransactionFeeController: construction_1.TransactionFeeController
+    HistoricFeeController: construction_1.HistoricFeeController,
+    EstimateFeeController: construction_1.EstimateFeeController,
 };
 //# sourceMappingURL=index.js.map

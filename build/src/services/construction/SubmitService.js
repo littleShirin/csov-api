@@ -2,10 +2,14 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.SubmitService = void 0;
 const AbstractService_1 = require("../AbstractService");
-const util_1 = require("../txWrapper/util");
 class SubmitService extends AbstractService_1.AbstractService {
-    async fetchSubmit(tx, blockHash) {
-        const actualTxHash = await util_1.rpcToLocalNode('author_submitExtrinsic', [tx]);
+    async fetchSubmit(tx) {
+        //const actualTxHash = await rpcToLocalNode('author_submitExtrinsic', [tx]);
+        const [actualTxHash, blockHash] = await Promise.all([
+            this.api.rpc.chain.getBlockHash(),
+            this.api.rpc.author.submitExtrinsic(tx)
+        ]);
+        console.log('blockHash:', blockHash);
         console.log(`Actual Tx Hash: ${actualTxHash}`);
         return {
             blockHash: blockHash,
