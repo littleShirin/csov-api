@@ -36,6 +36,8 @@ Inside the root folder of the project use "yarn start" to trigger a new build an
 - [/construction/derive](#/construction/derive) (Derive an AccountIdentifier from a Mnemonic)
 - [/construction/unsigned](#/construction/unsigned) (Generate an Unsigned Transaction)
 - [/construction/sign](#/construction/sign) (Sign a Unsigned Transaction)
+- [/construction/estimateFee](#/construction/estimateFee) (Estimate a Transaction Fee)
+- [/construction/historicFee](#/construction/historicFee) (Receive a historic Transaction Fee)
 - [/construction/submit](#/construction/submit) (Submit a Signed Transaction)
 
 ### /network/status
@@ -106,6 +108,26 @@ Derive returns the `accountidentifier` associated with a `mnemonic` and validate
 This endpoint returns an `unsigned transaction`. The request body needs a `sender & receiver address` and the `amount` of CSOV. The response object includes the `unsigned transaction string` and an `unsigned object`. The returned items will be used later on to sign the transaction and have to be `forwarded` to the /construction/sign endpoint. 
 ### /construction/sign
 Signs an unsigned transaction. Using the previously generated `unsigned transaction` string, `unsigned object` and the senders `mnemonic`, it will return a `signed transaction` which can be submitted.
+
+### /construction/estimateFee
+Estimate a transaction fee using the arguments `sender address`, `receiver address` and `amount`. 
+```bash
+Output: 
+{
+  "partialFee": "125000141",
+  "weight": "206909000"
+}
+```
+### /construction/historicFee
+Find the transaction fee using the arguments `blockHash` and `txHash`. 
+```bash
+Output: 
+{
+  "partialFee": "125000141",
+  "weight": "206909000"
+}
+```
+
 ### /construction/submit
 Submits a Signed Transaction to the node. On success, it will return a hash of the submitted transaction. 
 
