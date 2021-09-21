@@ -10,7 +10,7 @@ class HistoricFeeService extends AbstractService_1.AbstractService {
             this.api.rpc.chain.getBlock(blockHash),
         ]);
         const extrinsicsArray = currBlock.block.extrinsics;
-        console.log('extrinsicsArray', extrinsicsArray.toJSON());
+        //console.log('extrinsicsArray',extrinsicsArray.toJSON()); 
         const transactionsInfo = extrinsicsArray.map((extrinsic, index) => {
             const destSenderValueObj = {
                 index: index
@@ -19,7 +19,7 @@ class HistoricFeeService extends AbstractService_1.AbstractService {
             const value = extrinsic.method.toJSON().args.value;
             const sender = extrinsic.signer.toJSON();
             const hash = util_1.u8aToHex(util_crypto_1.blake2AsU8a(extrinsic.toU8a(), 256));
-            console.log('HASH from block', hash);
+            //console.log('HASH from block', hash);
             destSenderValueObj['dest'] = dest;
             destSenderValueObj['sender'] = sender;
             destSenderValueObj['value'] = value;
@@ -28,9 +28,9 @@ class HistoricFeeService extends AbstractService_1.AbstractService {
         });
         transactionsInfo.shift();
         //console.log('transactionsInfo', transactionsInfo)
-        //find the  right extrinsic in block matching to txHash input value 
+        //find the right extrinsic in block matching to txHash input value 
         const getTxHashMatch = transactionsInfo.filter((tx => (tx.hash == txHash)));
-        console.log('getTxHashMatch', getTxHashMatch);
+        //console.log('getTxHashMatch', getTxHashMatch);
         //index of tx inside of extrinsics 
         const txHashMatchIndex = getTxHashMatch[0].destSenderValueObj.index;
         //console.log('extrinsic:', JSON.stringify(currBlock.block.extrinsics[txHashMatchIndex].toHuman(), null, 2));

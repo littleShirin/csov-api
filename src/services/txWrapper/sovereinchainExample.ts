@@ -205,7 +205,7 @@ interface resMain {
 }
 
 
-export async function unsigned_tx(amount : string, dest: string, sender:string, unsigned_txProps: unsigned_txProps): Promise<unsignedResponse> {
+export async function unsigned_tx(amount : number | string, dest: string, sender:string, unsigned_txProps: unsigned_txProps): Promise<unsignedResponse> {
 	// const { block } = await rpcToLocalNode('chain_getBlock');
 	// const blockHash = await rpcToLocalNode('chain_getBlockHash');
 	// const genesisHash = await rpcToLocalNode('chain_getBlockHash', [0]);

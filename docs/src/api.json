@@ -1787,12 +1787,12 @@
         "description":"TransactionIdentifierResponse contains the transaction_identifier of a transaction that was submitted to either `/construction/hash` or `/construction/submit`.",
         "type":"object",
         "required": [
-          "blockHash",
+          "omSubmitBlockHash",
           "txHash"
           
          ],
         "properties": {
-          "blockHash": {
+          "onSubmitBlockHash": {
             "type": "string"
           },
           "txHash": {

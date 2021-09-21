@@ -1,29 +1,25 @@
 import { AbstractService } from '../AbstractService';
-
+import { BlockHash, Hash } from '@polkadot/types/interfaces';
 
 interface resSubmit {
-    blockHash: any,
-    txHash: any,
+    onSubmitBlockHash: BlockHash,
+    txHash: Hash,
 }
 
 export class SubmitService extends AbstractService {
     async fetchSubmit(tx: any): Promise<resSubmit>{
 
-        
-        //const actualTxHash = await rpcToLocalNode('author_submitExtrinsic', [tx]);
-
-        const  [ blockHash, actualTxHash ] = await Promise.all([
+        const  [ blockHash, txHash ] = await Promise.all([
                 this.api.rpc.chain.getBlockHash(),
                 this.api.rpc.author.submitExtrinsic(tx)
-                ])
+                ]);
 
-               
         //console.log('blockHash Submit service:',blockHash)
-        //console.log(`Actual Tx Hash: ${actualTxHash}`);
+        //console.log(`Actual Tx Hash: ${txHash}`);
 
             return{    
-                blockHash: blockHash,
-                txHash: actualTxHash,
+                onSubmitBlockHash: blockHash,
+                txHash: txHash,
                   }
         }
 }

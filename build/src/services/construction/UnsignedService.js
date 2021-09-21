@@ -25,14 +25,7 @@ class UnsignedService extends AbstractService_1.AbstractService {
             transactionVersion: transactionVersion,
             specName: specName
         };
-        // console.log('block:', block.toJSON());
         console.log('blockHash Unsigned Service:', blockHash.toJSON());
-        // console.log('genesisHash:', genesisHash.toJSON());
-        // console.log('metadataRpc:', metadataRpc.toJSON());
-        // console.log('accountNonce:', accountNonce.toJSON());
-        // console.log('specVersion:', specVersion.toJSON());
-        // console.log('transactionVersion:', transactionVersion.toJSON());
-        // console.log('specName:', specName.toJSON());
         const isValidAddress = (address) => {
             try {
                 keyring_1.encodeAddress(util_1.isHex(address) ? util_1.hexToU8a(address) : keyring_1.decodeAddress(address));
@@ -54,15 +47,28 @@ class UnsignedService extends AbstractService_1.AbstractService {
             throw Error("Value can't be negative or empty!");
         }
         else {
-            const BigIntAmount = BigInt(amount);
-            const multiplier = BigInt(1000000000000);
-            const total = (BigIntAmount * multiplier).toString();
-            const unsigned_res = await txWrapper_1.unsigned_tx(total, accountReceiver, accountSender, unsigned_txProps);
-            return {
-                unsigned_transaction: unsigned_res.unsignedTx,
-                unsigned: unsigned_res.unsigned,
-                mnemonic: ""
-            };
+            //check if input amount is safe(less than 9007199254740992) with Number.isSafeInteger() if false use BigInt 
+            const multiplier = 1000000000000;
+            const total = (Number(amount) * multiplier);
+            if (Number.isSafeInteger(total)) {
+                const unsigned_res = await txWrapper_1.unsigned_tx(total, accountReceiver, accountSender, unsigned_txProps);
+                return {
+                    unsigned_transaction: unsigned_res.unsignedTx,
+                    unsigned: unsigned_res.unsigned,
+                    mnemonic: ""
+                };
+            }
+            else {
+                const BigIntAmount = BigInt(amount);
+                const multiplier = BigInt(1000000000000);
+                const total = (BigIntAmount * multiplier).toString();
+                const unsigned_res = await txWrapper_1.unsigned_tx(total, accountReceiver, accountSender, unsigned_txProps);
+                return {
+                    unsigned_transaction: unsigned_res.unsignedTx,
+                    unsigned: unsigned_res.unsigned,
+                    mnemonic: ""
+                };
+            }
         }
     }
 }

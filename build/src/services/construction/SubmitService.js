@@ -4,16 +4,15 @@ exports.SubmitService = void 0;
 const AbstractService_1 = require("../AbstractService");
 class SubmitService extends AbstractService_1.AbstractService {
     async fetchSubmit(tx) {
-        //const actualTxHash = await rpcToLocalNode('author_submitExtrinsic', [tx]);
-        const [blockHash, actualTxHash] = await Promise.all([
+        const [blockHash, txHash] = await Promise.all([
             this.api.rpc.chain.getBlockHash(),
             this.api.rpc.author.submitExtrinsic(tx)
         ]);
         //console.log('blockHash Submit service:',blockHash)
-        //console.log(`Actual Tx Hash: ${actualTxHash}`);
+        //console.log(`Actual Tx Hash: ${txHash}`);
         return {
-            blockHash: blockHash,
-            txHash: actualTxHash,
+            onSubmitBlockHash: blockHash,
+            txHash: txHash,
         };
     }
 }
