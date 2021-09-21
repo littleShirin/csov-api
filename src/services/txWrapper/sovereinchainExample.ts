@@ -36,6 +36,7 @@ interface  unsigned_txProps {
 
 interface signedResponse {
 	signedTx: string, 
+	blockHash: string
 }
 
 
@@ -255,6 +256,9 @@ export async function unsigned_tx(amount : string, dest: string, sender:string, 
 	const signingPayload = construct.signingPayload(unsigned, { registry });
 	// console.log(`\nPayload to Sign: ${signingPayload}`);
 
+
+	//console.log('block hash unsigned TX:', unsigned.blockHash.toString()); 
+
 	return {
 		unsigned: unsigned, 
 		unsignedTx: signingPayload,
@@ -307,6 +311,14 @@ export async function sign_tx(
 		metadataRpc,
 		registry,
 	});
+
+	// const txInfo = decode(tx, {
+	// 	metadataRpc,
+	// 	registry,
+	// });
+	//console.log('TX Info from tx  Hash:', txInfo.method.args);
+
+	//console.log('block hash unsignedTX ', unsigned.blockHash.toString()); 
 	// console.log(` \nTransaction to Submit: ${tx}`);
 
 	// const decodedSignedTx = decode(unsigned, {
@@ -314,12 +326,12 @@ export async function sign_tx(
 	// 	registry,
 	// });
 
-	const decodedSignedTx = decode(tx, {
-		metadataRpc,
-		registry,
-	});
+	// const decodedSignedTx = decode(tx, {
+	// 	metadataRpc,
+	// 	registry,
+	// });
 
-	console.log('decodedSignedTx', decodedSignedTx);
+	//console.log('decodedSignedTx', decodedSignedTx);
 	// Calculate the tx hash of the signed transaction offline.
 	// const expectedTxHash = construct.txHash(tx);
 	// console.log(`\nExpected Tx Hash: ${expectedTxHash}`);
@@ -330,5 +342,6 @@ export async function sign_tx(
 	// console.log(`\nExpected Tx Hash: ${expectedTxHash}`);
 	return {
 		signedTx: tx,
+		blockHash: unsigned.blockHash.toString()
 	}
 }

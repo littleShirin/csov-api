@@ -21,9 +21,9 @@ class SignService extends AbstractService_1.AbstractService {
             const specName = await (await this.api.rpc.state.getRuntimeVersion()).specName;
             const specVersion = unsigned.specVersion;
             //const blockHash = unsigned.blockHash
-            const signed_transaction = (await sovereinchainExample_1.sign_tx(unsigned, unsigned_tx, mnemonic, metadataRpc, specName, specVersion)).signedTx;
+            const signed_transaction = (await sovereinchainExample_1.sign_tx(unsigned, unsigned_tx, mnemonic, metadataRpc, specName, specVersion));
             return {
-                signed_transaction,
+                signed_transaction: signed_transaction.signedTx,
             };
         }
     }

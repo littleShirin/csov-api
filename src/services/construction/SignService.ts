@@ -27,10 +27,11 @@ export class SignService extends AbstractService {
           mnemonic, 
           metadataRpc, 
           specName,
-          specVersion)).signedTx;
+          specVersion));
     
         return{
-          signed_transaction,
+          signed_transaction: signed_transaction.signedTx,
+
         }
       }
   };

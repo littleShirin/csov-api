@@ -1,5 +1,4 @@
 import { AbstractService } from '../AbstractService';
-//import { rpcToLocalNode } from '../txWrapper/util'
 
 
 interface resSubmit {
@@ -13,13 +12,14 @@ export class SubmitService extends AbstractService {
         
         //const actualTxHash = await rpcToLocalNode('author_submitExtrinsic', [tx]);
 
-        const  [actualTxHash, blockHash ] = await Promise.all([
-            this.api.rpc.chain.getBlockHash(),
-             this.api.rpc.author.submitExtrinsic(tx)
-        ])
-        
-        console.log('blockHash:',blockHash)
-        console.log(`Actual Tx Hash: ${actualTxHash}`);
+        const  [ blockHash, actualTxHash ] = await Promise.all([
+                this.api.rpc.chain.getBlockHash(),
+                this.api.rpc.author.submitExtrinsic(tx)
+                ])
+
+               
+        //console.log('blockHash Submit service:',blockHash)
+        //console.log(`Actual Tx Hash: ${actualTxHash}`);
 
             return{    
                 blockHash: blockHash,

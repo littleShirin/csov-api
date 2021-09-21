@@ -26,7 +26,7 @@ class UnsignedService extends AbstractService_1.AbstractService {
             specName: specName
         };
         // console.log('block:', block.toJSON());
-        // console.log('blockHash:', blockHash.toJSON());
+        console.log('blockHash Unsigned Service:', blockHash.toJSON());
         // console.log('genesisHash:', genesisHash.toJSON());
         // console.log('metadataRpc:', metadataRpc.toJSON());
         // console.log('accountNonce:', accountNonce.toJSON());
@@ -54,10 +54,14 @@ class UnsignedService extends AbstractService_1.AbstractService {
             throw Error("Value can't be negative or empty!");
         }
         else {
-            const unsigned_res = await txWrapper_1.unsigned_tx(amount, accountReceiver, accountSender, unsigned_txProps);
+            const BigIntAmount = BigInt(amount);
+            const multiplier = BigInt(1000000000000);
+            const total = (BigIntAmount * multiplier).toString();
+            const unsigned_res = await txWrapper_1.unsigned_tx(total, accountReceiver, accountSender, unsigned_txProps);
             return {
                 unsigned_transaction: unsigned_res.unsignedTx,
                 unsigned: unsigned_res.unsigned,
+                mnemonic: ""
             };
         }
     }
