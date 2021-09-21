@@ -7,7 +7,6 @@ class HistoricFeeController extends AbstractController_1.default {
     constructor(csovApi, api) {
         super(csovApi, api, '/construction/historicFee', new services_1.HistoricFeeService(csovApi, api));
         this.getCombine = async ({ body: { blockHash, txHash } }, res) => {
-            console.log();
             HistoricFeeController.sanitizedSend(res, await this.service.fetchHistoricFee(blockHash, txHash));
         };
         this.initRoutes();

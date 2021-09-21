@@ -7,7 +7,6 @@ class SignController extends AbstractController_1.default {
     constructor(csovApi, api) {
         super(csovApi, api, '/construction/sign', new services_1.SignService(csovApi, api));
         this.getCombine = async ({ body: { unsigned_transaction, unsigned, mnemonic } }, res) => {
-            console.log();
             SignController.sanitizedSend(res, await this.service.fetchSign(unsigned_transaction, unsigned, mnemonic));
         };
         this.initRoutes();

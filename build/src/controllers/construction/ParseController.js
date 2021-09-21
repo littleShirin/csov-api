@@ -7,7 +7,6 @@ class ParseController extends AbstractController_1.default {
     constructor(csovApi, api) {
         super(csovApi, api, '/construction/parse', new services_1.ParseService(csovApi, api));
         this.getCombine = async ({ body: { transaction, signed } }, res) => {
-            console.log();
             ParseController.sanitizedSend(res, await this.service.fetchParse(transaction, signed));
         };
         this.initRoutes();

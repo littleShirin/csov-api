@@ -30,7 +30,7 @@ export class ParseController extends AbstractController<ParseService> {
 		{ body:{transaction, signed} },
 		res
 	): Promise<void> => {
-		console.log()
+		
         ParseController.sanitizedSend(
 			res,
 			await this.service.fetchParse(transaction, signed)

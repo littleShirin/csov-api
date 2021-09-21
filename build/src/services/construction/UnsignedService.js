@@ -25,7 +25,7 @@ class UnsignedService extends AbstractService_1.AbstractService {
             transactionVersion: transactionVersion,
             specName: specName
         };
-        console.log('blockHash Unsigned Service:', blockHash.toJSON());
+        //console.log('blockHash Unsigned Service:', blockHash.toJSON());
         const isValidAddress = (address) => {
             try {
                 keyring_1.encodeAddress(util_1.isHex(address) ? util_1.hexToU8a(address) : keyring_1.decodeAddress(address));

@@ -40,7 +40,7 @@ export class UnsignedService extends AbstractService {
         specName: specName
       }
     
-    console.log('blockHash Unsigned Service:', blockHash.toJSON());
+      //console.log('blockHash Unsigned Service:', blockHash.toJSON());
  
 
 

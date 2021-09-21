@@ -25,9 +25,12 @@ async function main(value, dest, sender) {
     const keyring = new api_1.Keyring();
     // const senderSigner = keyring.addFromMnemonic('from body of request',{ name: 'Alice' }, 'sr25519');
     const alice = keyring.addFromUri('//Alice', { name: 'Alice' }, 'sr25519');
-    console.log("Alice's SS58-Encoded Address:", index_1.deriveAddress(alice.publicKey, 42));
+    // console.log(
+    // 	"Alice's SS58-Encoded Address:",
+    // 	deriveAddress(alice.publicKey, 42) 
+    // );
     const aliceAccountId = index_1.deriveAddress(alice.publicKey, 42);
-    console.log('aliceAccountId ----->>', aliceAccountId);
+    //console.log('aliceAccountId ----->>',aliceAccountId); 
     // To construct the tx, we need some up-to-date information from the node.
     // `txwrapper` is offline-only, so does not care how you retrieve this info.
     const { block } = await util_1.rpcToLocalNode('chain_getBlock');
@@ -36,8 +39,8 @@ async function main(value, dest, sender) {
     const metadataRpc = await util_1.rpcToLocalNode('state_getMetadata');
     const accountNonce = await util_1.rpcToLocalNode('system_accountNextIndex', [sender]);
     const { specVersion, transactionVersion, specName } = await util_1.rpcToLocalNode('state_getRuntimeVersion');
-    console.log('block Hash:', blockHash);
-    console.log('accountNonce:', accountNonce);
+    // console.log('block Hash:', blockHash);
+    // console.log('accountNonce:',accountNonce);
     // Create SovereinChain type registry.
     const registry = index_1.getRegistry({
         chainName: 'SovereignChain',
@@ -74,28 +77,30 @@ async function main(value, dest, sender) {
         metadataRpc,
         registry,
     });
-    console.log(
-    // Decoding the transfer amount
-    `\n DecodedUnsigned Transaction\n  To: ${destBob}\n` +
-        `\n Amount: ${decodedUnsigned.method.args.value}`);
+    // //console.log(
+    // 	// Decoding the transfer amount
+    // 	`\n DecodedUnsigned Transaction\n  To: ${destBob}\n` + 
+    // 	`\n Amount: ${decodedUnsigned.method.args.value}`
+    // );
     // Construct the signing payload from an unsigned transaction.
     const signingPayload = index_1.construct.signingPayload(unsigned, { registry });
-    console.log(`\nPayload to Sign: ${signingPayload}`);
+    //console.log(`\nPayload to Sign: ${signingPayload}`);
     // Decode the information from a signing payload.
-    const payloadInfo = index_1.decode(signingPayload, {
-        metadataRpc,
-        registry,
-    });
-    console.log(
-    // Decoded transaction of the transfer and providing the tx information
-    `\nDecoded Transaction\n  To: ${destBob}\n` +
-        `ADDRESS: ${payloadInfo.address}`);
+    // const payloadInfo = decode(signingPayload, {
+    // 	metadataRpc,
+    // 	registry,
+    // });
+    //console.log(
+    // 	 // Decoded transaction of the transfer and providing the tx information
+    // 	`\nDecoded Transaction\n  To: ${destBob}\n` +
+    // 		`ADDRESS: ${payloadInfo.address}`
+    // );
     // Sign a payload. This operation should be performed on an offline device.
     const signature = util_1.signWith(alice, signingPayload, {
         metadataRpc,
         registry,
     });
-    console.log(`\nSignature: ${signature}`);
+    //console.log(`\nSignature: ${signature}`);
     // Encode a signed transaction.
     const tx = index_1.construct.signedTx(unsigned, signature, {
         metadataRpc,

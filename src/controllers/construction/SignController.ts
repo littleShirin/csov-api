@@ -21,7 +21,7 @@ export class SignController extends AbstractController<SignService> {
 		{ body: {unsigned_transaction, unsigned, mnemonic} },
 		res
 	): Promise<void> => {
-		console.log()
+		
         SignController.sanitizedSend(
 			res,
 			await this.service.fetchSign(unsigned_transaction, unsigned, mnemonic)

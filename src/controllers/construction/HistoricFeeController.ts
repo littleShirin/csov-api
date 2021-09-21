@@ -30,7 +30,7 @@ export class HistoricFeeController extends AbstractController<HistoricFeeService
 		{ body:{blockHash, txHash} },
 		res
 	): Promise<void> => {
-		console.log()
+		
         HistoricFeeController.sanitizedSend(
 			res,
 			await this.service.fetchHistoricFee(blockHash, txHash)
